@@ -252,6 +252,10 @@ class Resque_Job
 	 */
 	public function __toString()
 	{
+		return $this->toString(true);
+	}
+
+	public function toString($include_args = true) {
 		$name = array(
 			'Job{' . $this->queue .'}'
 		);
@@ -259,7 +263,7 @@ class Resque_Job
 			$name[] = 'ID: ' . $this->payload['id'];
 		}
 		$name[] = $this->payload['class'];
-		if(!empty($this->payload['args'])) {
+		if($include_args && !empty($this->payload['args'])) {
 			$name[] = json_encode($this->payload['args']);
 		}
 		return '(' . implode(' | ', $name) . ')';
